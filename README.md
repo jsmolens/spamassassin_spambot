@@ -1,5 +1,7 @@
 # SpamAssassin anti-spambot rules
 
+## Introduction
+
 If your credit card and personal information is stolen, fraudsters
 will sometimes use spambot to subscribe your email address to hundreds
 of mailing lists, register at online stores, and so on.  This is done
@@ -21,6 +23,8 @@ information, but do not have even simple captcha-type verification configured.
 Popular storefronts, such as Shopify-based stores fall into this category,
 as do many WordPress sites and legitimate mailing lists which send an
 address verification email.
+
+## One solution
 
 This set of SpamAssassin rules captures most of these fradulent messages.
 The false-positive rate is not insignficant, but if you are expecting
@@ -48,7 +52,10 @@ To install:
 
   - Copy the rules file to your SpamAssassin installation directory
 
-    On Debian, /etc/spamassassin/
+    On Debian:
+    ```
+    cp rules/spambot.cf /etc/spamassassin/
+    ```
      
   - Reload the spamassassin service
 
@@ -66,5 +73,7 @@ file the marked emails in a folder called Spambot:
 * ^X-Spam-Status:.*SPAMBOT_.*_
 Spambot
 ```
-
 It is suggested that these rules be evaluated after other matching rules.
+
+The rules can be disabled once an attack is finished by removing the
+```spambot.cf``` file and restarting spamassassin.
