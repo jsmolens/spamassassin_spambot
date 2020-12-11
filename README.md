@@ -48,7 +48,16 @@ For mailing lists that don't ask for affirmative verification of your email
 address, it will be useful to have the original emails because the unsubscribe
 links included in them generally do work.
 
-To install:
+Please look through the rules before installing.  Comment out or modify any
+rules that may be specific to your environment.
+
+### Requirements
+
+ - A functioning SpamAssassin, version 3.4.0 or later
+ - Mail filtering tool (e.g., procmail or sieve)
+
+
+### To install:
 
   - Copy the rules file to your SpamAssassin installation directory
 
