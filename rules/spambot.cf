@@ -1,0 +1,57 @@
+
+# Allow English-language only (add more languates if desired)
+ok_languages en
+# And increase the score for an unwanted spam
+score UNWANTED_LANGUAGE_BODY 2.0
+
+# Wordpress login and bulk mailer URLs in the body
+uri      SPAMBOT_0 /(\/wp-login\.php\?action\=rp|e2ma.net|freshdesk\.com|list-manage\.com\/unsubscribe|sendgrid\.net\/ls\/click|kmail-lists\.com)/
+describe SPAMBOT_0 Wordpress logins, other bulk mailer urls
+score    SPAMBOT_0 1.0
+
+# Foreign sources of mail and spam-friendly domains (edit to remove
+# your favored country codes or domains
+header SPAMBOT_1 From =~ /\.(jp|fr|de|nl|nz|in|br|za|eu|ir|it|cz|gr|es|dk|ru|at|pl|hr|ee|cy|fi|al|by|bg|be|lv|lu|pt|sk|ua|ch|lt|ie|is|gl|no|ro|si|se|hu|so|cl|tw|cn|vn|lu|ky|pk|land|fund|gr)[$\ \>]/
+describe SPAMBOT_1 Foreign email addresses from spambots
+score SPAMBOT_1 1.0
+
+# Certain strings in the body of the message, including a random password
+body SPAMBOT_2 /(If you received this email by mistake|if you did not request|Please confirm|activated your customer account|thanks for joining|votre abonnement|Thanks for signing up|Confirm your|per confermare|reset your password|confirmer votre|Vielen dank|has been received and is being reviewed by our support staff|Password:\s+[a-zA-Z0-9]{8,}|EMAIL_GREET_NONE)/i
+describe SPAMBOT_2 Spambot strings in the message body
+score SPAMBOT_2 2.0
+
+# Many subject strings courtesy of protonmail
+header SPAMBOT_3 Subject =~ /(Password reset|reset password|Welcome to|subscription|mailing|subscribing|activation|verify|registration|activate|your account|verification|signing up|registering|new account|username and password|registered|welcome|account details|verify your|to activate or decline your new password|Activación|abonnement|souscription)/i
+describe SPAMBOT_3 Subject line filters
+score SPAMBOT_3 1.0
+
+# Additional subject strings courtesy of protonmail, along with additions
+# from experience
+header SPAMBOT_32 Subject =~ /(newsletteranmeldung|Newsletterregistrierung|Newsletter|Anmeldung|potwierdzenie|subskrypcji|inscripcin|revista|conferma|inscrizione|validation|willkommen|inscription|account details|Aktivierung|Benutzerkontendetails|bienvenue sur|bienvenido|новом пользователе|benvenuto nel Forum|Hoşgeldiniz|Vítejte na|пожаловать|Bine aţi venit|Üdvözlünk a|fórumon|Witamy na|Velkommen til|Tervetuloa|unirte|Welkom op|activer|Usuario|Välkommen till|Bem vindo|Registrierungsanfrage|注册|подтверждения|регистрацию|Регистрационные|konto|dettagli account|registratie|conta|cuenta|compte|registrazione|contului|konta|aktivoi|Gracias por)/i
+describe SPAMBOT_32 Subject line filters - part 2
+score SPAMBOT_32 1.0
+
+# Shopify stores include this X-ShopId header.  Unfortunately, the
+# service does not have a captcha on new user accounts.
+header SPAMBOT_4 X-ShopId =~ /[0-9]+/
+describe SPAMBOT_4 Has shop id
+score SPAMBOT_4 1.0
+
+header SPAMBOT_6 Return-Path =~ /(secure-server\.net)/
+describe SPAMBOT_6 Return path header
+score SPAMBOT_6 1.0
+
+# Too broad, captures many legitimate mailing lists
+#header SPAMBOT_7 List-Unsubscribe =~ /(mailto|http)/i
+#describe SPAMBOT_7 Has unsubscribe header
+#score SPAMBOT_7 1.0
+
+# Found a number of services that set this header
+header SPAMBOT_8 X-SECURESERVER-ACCT =~ /([0-9a-z]+)/i
+describe SPAMBOT_8 Has SECURESERVER-ACCT header
+score SPAMBOT_8 2.0
+
+# Found a number of services that set this header
+header SPAMBOT_9 X-Inf-SourceType =~ /(WEBFORM)/i
+describe SPAMBOT_9 X-Inf-Source header included
+score SPAMBOT_9 2.0
